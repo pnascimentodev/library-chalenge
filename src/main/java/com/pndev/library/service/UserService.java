@@ -43,6 +43,22 @@ public class UserService {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
+    @Transactional(readOnly = true)
+    public List<User> findByRegistrationDateBetween(String startDate, String endDate) {
+        return userRepository.findByRegistrationDateBetween(startDate, endDate);
+    }
 
+    @Transactional(readOnly = true)
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Transactional
+    public void deleteUserById(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new ResourceNotFoundException("User", id);
+        }
+        userRepository.deleteById(id);
+    }
 
 }
